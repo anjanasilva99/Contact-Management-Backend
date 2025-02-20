@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Contact } from './contact.entity';
-import { ContactsController } from './contacts.controller';
-import { ContactsService } from './contacts.service';
+import { Contact } from './entities/contact.entity';
+import { ContactsController } from './controllers/contacts.controller';
+import { ContactsService } from './services/contacts.service';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
