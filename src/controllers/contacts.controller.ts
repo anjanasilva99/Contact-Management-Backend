@@ -31,6 +31,16 @@ export class ContactsController {
     };
   }
 
+  @Get(':id')
+  async findOne(@Param('id') id: number) {
+    const contact = await this.contactsService.findOne(id);
+    return {
+      statusCode: 200,
+      message: 'Contact retrieved successfully',
+      data: contact,
+    };
+  }
+
   @Post()
   async create(
     @Body() createContactDto: CreateContactDto,

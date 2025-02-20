@@ -12,5 +12,5 @@ export class CreateContactDto {
 
   @IsOptional()
   @IsPhoneNumber({ message: 'Phone number is invalid' })
-  phone: string;
+  phone?: string; // Optional phone number
 }
