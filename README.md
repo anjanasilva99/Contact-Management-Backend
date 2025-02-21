@@ -21,7 +21,7 @@ A RESTful API backend for managing contacts built with NestJS, TypeORM, and Post
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/anjanasilva99/Contact-Management-Backend.git
 cd contact-management-backend
 ```
 
