@@ -1,5 +1,5 @@
 import { IsString, IsEmail, IsOptional, IsNotEmpty } from 'class-validator';
-import { IsPhoneNumber } from '../phone-number.decorator';
+import { IsPhoneNumber } from '../validators/phone-number.decorator';
 
 export class CreateContactDto {
   @IsString({ message: 'Name must be a string' })

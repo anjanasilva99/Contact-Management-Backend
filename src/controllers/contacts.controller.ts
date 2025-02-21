@@ -20,6 +20,11 @@ import { UpdateContactDto } from '../dtos/update-contact.dto';
 interface SearchQuery {
   search?: string;
 }
+
+interface ValidationError {
+  name: string;
+  constraints?: { [key: string]: string };
+}
 @Controller('contacts')
 export class ContactsController {
   constructor(private readonly contactsService: ContactsService) {}
@@ -29,6 +34,7 @@ export class ContactsController {
     statusCode: number;
     message: string;
     data: Contact[];
+    error?: string;
   }> {
     try {
       const search = query.search?.toString();
@@ -40,6 +46,14 @@ export class ContactsController {
         data: contacts,
       };
     } catch (error) {
+      if (error instanceof NotFoundException) {
+        return {
+          statusCode: HttpStatus.NOT_FOUND,
+          message: 'No contacts found',
+          data: [], // Add empty array to satisfy the type
+          error: error.message,
+        };
+      }
       throw new InternalServerErrorException('Error retrieving contacts');
     }
   }
@@ -112,11 +126,14 @@ export class ContactsController {
       };
     } catch (error) {
       // Handle validation errors
-      if (error?.name === 'ValidationError') {
+      const validationError = error as ValidationError;
+      if (validationError?.name === 'ValidationError') {
         return {
           statusCode: HttpStatus.BAD_REQUEST,
           message: 'Validation failed',
-          errors: Object.values(error.constraints),
+          errors: validationError.constraints
+            ? Object.values(validationError.constraints)
+            : ['Validation failed'],
         };
       }
 
@@ -179,11 +196,14 @@ export class ContactsController {
         };
       }
 
-      if (error?.name === 'ValidationError') {
+      const validationError = error as ValidationError;
+      if (validationError?.name === 'ValidationError') {
         return {
           statusCode: HttpStatus.BAD_REQUEST,
           message: 'Validation failed',
-          errors: Object.values(error.constraints),
+          errors: validationError.constraints
+            ? Object.values(validationError.constraints)
+            : ['Validation failed'],
         };
       }
 
