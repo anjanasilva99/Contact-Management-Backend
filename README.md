@@ -39,8 +39,8 @@ cp .env.sample .env
 
 Database Setup
 
-1.Create a PostgreSQL database
-2.Configure the database connection in .env file
+1. Create a PostgreSQL database
+2. Configure the database connection in .env file
 
 
 Running the Application
